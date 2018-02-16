@@ -19,11 +19,12 @@ function Word (chosenWord) {
 		var whatToReturn = 0;
 		//checks each letter to see if any match what the user has guessed
 		this.chars.forEach(function(ltr) {
-			if (ltr.letter === guess) {
-				ltr.show === true;
+			if (ltr.char === guess) {
+				ltr.show = true;
 				whatToReturn++;
 			}
 		});
+		return whatToReturn;
 	};
 
 	//checks if the user has won
@@ -31,7 +32,7 @@ function Word (chosenWord) {
 		//checks every character to see if ".show" is true for each letter in the array, 
 		//if it is, it'll set the wordGuessed to true, meaning the user has won
 		if (this.chars.every(function(ltr) {
-			return lttr.show === true;
+			return ltr.show === true;
 		})){
 			this.wordGuessed = true;
 			return true;

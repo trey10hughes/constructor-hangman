@@ -9,7 +9,6 @@ var game = {
 	guessesLeft: 6,
 	//characters guessed by the user go here
 	lettersGuessed: [],
-	display: 0,
 	wordToGuess: null,
 
 	//function to start the game
@@ -56,7 +55,8 @@ var game = {
 	},//end of new function
 
 	guess: function() {
-		var that = this;
+		var currentGame = this;
+		console.log("you have " + currentGame.guessesLeft + " guesses remaining.");
 		//prompts the user to input a letter
 		inquirer.prompt([{
 			name: "guessedLetter",
@@ -70,7 +70,58 @@ var game = {
 				}
 			}
 		}]).then(function(ltr) {
-			console.log("you guessed: " + ltr.guessedLetter);
+			
+			var letter = (ltr.guessedLetter).toUpperCase();
+			console.log("you guessed: " + letter);
+
+			var guessedBefore = false;
+			for (var i = 0; i < currentGame.lettersGuessed.length; i++){
+				if (letter === currentGame.lettersGuessed[i]){
+					guessedBefore = true;
+				}
+			}
+
+			if(guessedBefore === false){
+				currentGame.lettersGuessed.push(letter);
+
+				var result = currentGame.wordToGuess.checkGuess(letter);
+				console.log("result: " + result);
+
+				if(result === 0){
+					console.log("wrong");
+					currentGame.guessesLeft--;
+					console.log("you have " + currentGame.guessesLeft + " remaining.");
+
+					console.log(currentGame.wordToGuess.showWord());
+					console.log("=================================")
+					console.log("letters guessed so far: " + currentGame.lettersGuessed);
+
+				}
+			} 
+			if(result > 0) {
+				console.log("correct!");
+				//first check that the user won
+				if (currentGame.wordToGuess.winCheck() === true){
+					console.log(currentGame.wordToGuess.showWord());
+					console.log("You win!");
+					currentGame.start();
+				} else {
+					console.log("you have " + currentGame.guessesLeft + " remaining.");
+
+					console.log(currentGame.wordToGuess.showWord());
+					console.log("=================================");
+					console.log("letters guessed so far: " + currentGame.lettersGuessed);
+				}
+
+			}
+
+			if(currentGame.guessesLeft > 0 && currentGame.wordToGuess.wordGuessed === false) {
+				currentGame.guess();
+			} else if(currentGame.guessesLeft === 0) {
+				console.log("you lose... the word you were looking for was " + currentGame.wordToGuess.word);
+				currentGame.start();
+			}
+
 		});
 	}
 
