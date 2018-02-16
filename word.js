@@ -7,10 +7,10 @@ function Word (chosenWord) {
 	this.chars = [];
 	this.wordGuessed = false; 
 
-	this.getChars = function {
+	this.getChars = function () {
 		//fill the chars array
-		for(var i = 0; i < newWord.word.length; i++;){
-			var newChar = new Letter(that.word[i]);
+		for(var i = 0; i < newWord.word.length; i++){
+			var newChar = new Letter(newWord.word[i]);
 			this.letters.push(newChar);
 		}
 	};
@@ -23,7 +23,7 @@ function Word (chosenWord) {
 				ltr.show === true;
 				whatToReturn++;
 			}
-		}
+		});
 	};
 
 	//checks if the user has won
@@ -41,7 +41,7 @@ function Word (chosenWord) {
 	this.showWord = function() {
 		var wordDisplay = " ";
 		//shows parts of the word depending on if the letters have been guessed or not
-		that.chars.forEach(function(ltr) {
+		newWord.chars.forEach(function(ltr) {
 			var charDisplay = ltr.showLetter();
 			wordDisplay += charDisplay;
 		});
