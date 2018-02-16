@@ -11,7 +11,7 @@ function Word (chosenWord) {
 		//fill the chars array
 		for(var i = 0; i < newWord.word.length; i++){
 			var newChar = new Letter(newWord.word[i]);
-			this.letters.push(newChar);
+			this.chars.push(newChar);
 		}
 	};
 

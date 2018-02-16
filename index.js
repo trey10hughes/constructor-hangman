@@ -43,12 +43,38 @@ var game = {
 			//creates a random number that will be used to select a word from the word bank array
 			var randNum = Math.floor(Math.random()*this.words.length);
 			console.log("random number is: " + randNum);
+			this.wordToGuess = new Word(this.words[randNum]);
+			this.wordToGuess.getChars();
+
+			console.log(this.wordToGuess.showWord());
+			this.guess();
 		} else {
 			console.log("setting guesses left to 6...")
 			this.guessesLeft = 6;
 			this.new();
 		}
+	},//end of new function
+
+	guess: function() {
+		var that = this;
+		//prompts the user to input a letter
+		inquirer.prompt([{
+			name: "guessedLetter",
+			type: "input",
+			message: "guess a letter",
+			validate: function(input) {
+				if(isLetter(input)){
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}]).then(function(ltr) {
+			console.log("you guessed: " + ltr.guessedLetter);
+		});
 	}
+
+
 }//end of game
 
 game.start();
